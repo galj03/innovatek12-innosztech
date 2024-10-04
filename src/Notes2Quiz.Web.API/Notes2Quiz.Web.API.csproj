@@ -6,6 +6,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<UserSecretsId>a8a89929-1ec3-4e09-914b-243a9a351e21</UserSecretsId>
 		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<BaseOutputPath>..\..\bin</BaseOutputPath>
 	</PropertyGroup>
 
 	<ItemGroup>
