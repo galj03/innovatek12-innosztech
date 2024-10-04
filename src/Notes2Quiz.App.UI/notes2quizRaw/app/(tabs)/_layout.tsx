@@ -31,6 +31,16 @@ export default function TabLayout() {
           ),
         }}
       />
+
+      <Tabs.Screen
+        name="quiz"
+        options={{
+          title: 'Quiz',
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon name={focused ? 'search' : 'search'} />
+          ),
+        }}
+      />
     </Tabs>
   );
 }
