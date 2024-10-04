@@ -23,9 +23,9 @@ export default function TabLayout() {
       />
 
       <Tabs.Screen
-        name="masik"
+        name="text"
         options={{
-          title: 'Masik',
+          title: 'Text',
           tabBarIcon: ({ focused }) => (
             <TabBarIcon name={focused ? 'menu' : 'menu'} />
           ),

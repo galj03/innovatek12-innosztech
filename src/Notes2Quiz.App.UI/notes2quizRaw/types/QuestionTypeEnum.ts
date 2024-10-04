@@ -1,0 +1,3 @@
+export enum QuestionTypeEnum {
+    OneCorrectAnswerQuestion
+}
