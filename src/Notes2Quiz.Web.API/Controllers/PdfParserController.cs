@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Notes2Quiz.Web.API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class PdfParserController : ControllerBase
     {
         #region Fields
