@@ -38,7 +38,8 @@ namespace Notes2Quiz.Web.API.Controllers
         [HttpPost("text")]
         public async Task<ActionResult<IQuiz>> ParseText([Required] string text)
         {
-            throw new NotImplementedException();
+            var quiz = await _quizService.GenerateQuizFromText(text);
+            return CreatedAtAction(nameof(ParseText), quiz);
         }
 
         [HttpPost("images")]
