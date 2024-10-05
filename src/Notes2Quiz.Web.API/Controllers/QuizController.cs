@@ -6,6 +6,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Notes2Quiz.Web.API.Controllers
 {
+    /// <summary>
+    /// This controller handles quiz-related API calls.
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     public class QuizController : ControllerBase, IQuizController
@@ -23,13 +26,6 @@ namespace Notes2Quiz.Web.API.Controllers
         #endregion
 
         #region Endpoints
-        [HttpPost("dummy")]
-        public async Task<ActionResult<TextInputDTO>> Temp([Required] TextInputDTO text)
-        {
-            var value = await _quizService.DummyMethod(text.Text);
-            return new TextInputDTO(value);
-        }
-
         [HttpPost("pdf")]
         public async Task<ActionResult<IQuiz>> ParsePdf([Required] IPdf pdf)
         {

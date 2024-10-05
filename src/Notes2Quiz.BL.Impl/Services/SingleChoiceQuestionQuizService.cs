@@ -9,8 +9,7 @@ using System.Text.Json;
 
 namespace Notes2Quiz.BL.Impl.Services
 {
-    //TODO: this only generates one-correct-answer questions, show this in the name as well
-    internal class QuizService : IQuizService
+    internal class SingleChoiceQuestionQuizService : IQuizService
     {
         #region Fields
         private readonly ChatClient _chatClient;
@@ -50,7 +49,7 @@ namespace Notes2Quiz.BL.Impl.Services
         #endregion
 
         #region ctor
-        public QuizService(IApplicationSettings applicationSettings, IQuizFactory quizFactory, IQuestionFactory questionFactory)
+        public SingleChoiceQuestionQuizService(IApplicationSettings applicationSettings, IQuizFactory quizFactory, IQuestionFactory questionFactory)
         {
             if (applicationSettings is null)
             {
@@ -64,13 +63,7 @@ namespace Notes2Quiz.BL.Impl.Services
         }
         #endregion
 
-        public async Task<string> DummyMethod(string input)
-        {
-            await Task.Run(() => { Thread.Sleep(1000); });
-            var result = $"Hello, {input}!";
-            return result;
-        }
-
+        #region Inherited members
         public async Task<IQuiz> GenerateQuizFromText(string input, string quizName = "")
         {
             if (string.IsNullOrWhiteSpace(quizName))
@@ -78,7 +71,6 @@ namespace Notes2Quiz.BL.Impl.Services
                 quizName = "Studying Quiz";
             }
 
-            //TODO: if quizName is null or whitespace, then generate a name for it
             var prompt = FormattableStringFactory.Create(Constants.Prompt.ONE_CORRECT_ANSWER_QUIZ_PROMPT, input);
 
             var completion = await _chatClient.CompleteChatAsync([new UserChatMessage(prompt.ToString())], _options);
@@ -89,7 +81,9 @@ namespace Notes2Quiz.BL.Impl.Services
 
             return quiz;
         }
+        #endregion
 
+        #region Private methods
         private IEnumerable<IQuestion> ExtractQuestionsFromResponse(JsonDocument structuredJson)
         {
             var questions = new List<IQuestion>();
@@ -111,5 +105,6 @@ namespace Notes2Quiz.BL.Impl.Services
 
             return questions;
         }
+        #endregion
     }
 }

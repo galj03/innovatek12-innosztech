@@ -19,4 +19,8 @@
 		<ProjectReference Include="..\Notes2Quiz.BL\Notes2Quiz.BL.csproj" />
 	</ItemGroup>
 
+	<PropertyGroup>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<NoWarn>$(NoWarn);1591</NoWarn>
+	</PropertyGroup>
 </Project>

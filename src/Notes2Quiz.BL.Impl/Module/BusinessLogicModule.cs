@@ -11,9 +11,10 @@ namespace Notes2Quiz.BL.Impl.Module
 {
     public class BusinessLogicModule : IModule
     {
+        #region Inherited members
         public void RegisterTypes(IServiceCollection serviceCollection)
         {
-            serviceCollection.AddTransient<IQuizService, QuizService>();
+            serviceCollection.AddTransient<IQuizService, SingleChoiceQuestionQuizService>();
             serviceCollection.AddTransient<IAuthService, AuthService>();
 
             serviceCollection.AddTransient<IApplicationSettings, ApplicationSettings>();
@@ -21,5 +22,6 @@ namespace Notes2Quiz.BL.Impl.Module
             serviceCollection.AddTransient<IQuizFactory, QuizFactory>();
             serviceCollection.AddTransient<IQuestionFactory, QuestionFactory>();
         }
+        #endregion
     }
 }
