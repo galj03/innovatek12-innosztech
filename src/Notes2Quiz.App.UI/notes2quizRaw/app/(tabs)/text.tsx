@@ -1,6 +1,7 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import { Avatar, Button, Card, Text, TextInput } from "react-native-paper";
+import { openai } from "../../config/OpenAi";
 
 import { Quiz } from "../../types/Quiz"
 import { QuestionTypeEnum } from "../../types/QuestionTypeEnum";
@@ -11,7 +12,7 @@ export default function Index() {
   const [responseText, setResponseText] = React.useState("");
   const [fetchTestText, setFetchTestText] = React.useState("");
 
-  const sendText = () => {
+  const sendText = async () => {
     const requestBody: Quiz = {
       title: text,
       questions:[
@@ -36,22 +37,35 @@ export default function Index() {
       ]
     };
 
-    fetch("localhost:7029/api/quiz/text", {
+    await fetch("https://192.168.27.241:7029/api/Quiz/dummy", {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(requestBody)
+      body: JSON.stringify({text: "valami"})
     }).then((response) => response.json())
-    .then((json) => setFetchTestText(json))
+    .then((json) => console.log(json))
     .catch((error) => console.log("fetch error: " + error));
 
+    let generatedText: string | null = "";
     console.log(fetchTestText);
+
+    /*const response = await openai.chat.completions.create({
+      model: 'gpt-4o-mini',
+      messages: [
+        {"role": "system", "content": text}
+      ]
+    }).then((responseFromOpenAi) => {
+      responseFromOpenAi.choices.forEach((item) => {
+        console.log(item.message);
+        generatedText = item.message.content;
+      });
+    });*/
 
     //console.log("Sending text:");
     //console.log(text);
-    setResponseText(text);
+    setResponseText(fetchTestText || "Generating text...");
   }
 
   return (
