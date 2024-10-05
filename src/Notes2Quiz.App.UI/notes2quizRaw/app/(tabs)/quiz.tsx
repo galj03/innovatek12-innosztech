@@ -1,21 +1,21 @@
-import { Pressable, StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { QuestionComponent} from "../../components/Question";
-import { quiz } from "../../constants/QuizList";
 import React from "react";
 import { DataTable, Button, Text } from "react-native-paper";
 import { Question } from "@/types/Question";
-import { QuizProvider } from "@/hooks/QuizContext";
+import { QuestionProvider } from "@/hooks/QuestionContext";
+import { QuizContext } from "@/hooks/QuizContext";
 
 
 export default function Index() {
-  
-  const [page, setPage] = React.useState<number>(quiz.questions.length);
+  const [quizState, setQuizState] = React.useContext(QuizContext);
+  const [page, setPage] = React.useState<number>(quizState.questions.length);
   const [numberOfItemsPerPageList] = React.useState([1]);
   const [itemsPerPage, onItemsPerPageChange] = React.useState(
     numberOfItemsPerPageList[0]
   );
 
-  const [items] = React.useState(quiz.questions);
+  const [items] = React.useState(quizState.questions);
 
   const from = page * itemsPerPage;
   const to = Math.min((page + 1) * itemsPerPage, items.length);
@@ -27,14 +27,14 @@ export default function Index() {
   return (
     <View style={styles.container}>
       <DataTable style={styles.questionContainer}>
-        <QuizProvider>
+        <QuestionProvider>
           {
             items.slice(from, to).map((question: Question, index: number) => (
 
               <QuestionComponent questionNumber={from} visitedQuestions={[]} key={index} propQuestion={question} />
             ))
           }
-        </QuizProvider>
+        </QuestionProvider>
       </DataTable>
 
       <Text>{`${from + 1} of ${items.length}`}</Text>
@@ -48,7 +48,7 @@ export default function Index() {
         style={styles.paginationButtons}
         
       />
-      <Button style={styles.submitButton} mode="contained" disabled={from + 1 !== quiz.questions.length}>
+      <Button style={styles.submitButton} mode="contained" disabled={from + 1 !== quizState.questions.length}>
         <Text style={styles.submitText}>Submit</Text>
       </Button>
     </View>

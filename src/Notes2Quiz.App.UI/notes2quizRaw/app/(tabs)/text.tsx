@@ -1,70 +1,54 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, StyleSheet } from "react-native";
-import { Avatar, Button, Card, Text, TextInput } from "react-native-paper";
+import { Avatar, Button, Card, Dialog, Text, TextInput } from "react-native-paper";
 import { openai } from "../../config/OpenAi";
 
 import { Quiz } from "../../types/Quiz"
 import { QuestionTypeEnum } from "../../types/QuestionTypeEnum";
+import { Link } from "expo-router";
+import { QuizContext } from "@/hooks/QuizContext";
+import { Question } from "@/types/Question";
 
-export default function Index() {
+export default function Index(props: any) {
   const LeftContent = (props: any) => <Avatar.Icon {...props} icon="folder" />;
   const [text, setText] = React.useState("");
   const [responseText, setResponseText] = React.useState("");
-  const [fetchTestText, setFetchTestText] = React.useState("");
+  const [fetchQuiz, setFetchQuiz] = React.useState<Quiz>();
+  const [dialogVisibility, setDialogVisibility] = React.useState(false);
+  const [quizState, setQuizState] = React.useContext(QuizContext);
 
   const sendText = async () => {
-    const requestBody: Quiz = {
-      title: text,
-      questions:[
-        {
-          questionText: text,
-          questionType: QuestionTypeEnum.OneCorrectAnswerQuestion,
-          possibleAnswers: ["answer 1", "answer2", "answer3", "answer4"],
-          correctAnswer: "answer1"
-        },
-        {
-          questionText: text,
-          questionType: QuestionTypeEnum.OneCorrectAnswerQuestion,
-          possibleAnswers: ["answer 1", "answer2", "answer3", "answer4"],
-          correctAnswer: "answer1"
-        },
-        {
-          questionText: text,
-          questionType: QuestionTypeEnum.OneCorrectAnswerQuestion,
-          possibleAnswers: ["answer 1", "answer2", "answer3", "answer4"],
-          correctAnswer: "answer1"
-        }
-      ]
-    };
-
-    let bodyMessage = JSON.stringify({text:"valami"})
+    console.log("-----------------------")
+    text.replaceAll("/(\r\n|\n|\r)/gm", "");
+    console.log(JSON.stringify(text));
 
     console.log("Fetching...");
-    await fetch("http://192.168.27.14:8080/api/quiz/dummy", {
+    await fetch("http://192.168.27.14:8080/api/quiz/text", {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({text: text})
-    }).then(async (response) => await response.json())
-    .then((json) => setResponseText(json.text))
+    }).then((response) => response.json())
+    .then((json) => {
+      setQuizState(json);
+      setDialogVisibility(true);
+    })
     .catch((error) => console.log("fetch error: " + error));
-
-    /*const response = await openai.chat.completions.create({
-      model: 'gpt-4o-mini',
-      messages: [
-        {"role": "system", "content": text}
-      ]
-    }).then((responseFromOpenAi) => {
-      responseFromOpenAi.choices.forEach((item) => {
-        console.log(item.message);
-        generatedText = item.message.content;
-      });
-    });*/
-
-    //console.log("Sending text:");
-    //console.log(text);
   }
+
+  useEffect(() => {
+    if (quizState !== undefined) {
+      console.log("-----------------")
+      console.log(quizState.title)
+      quizState.questions.forEach((item: Question) => {
+        console.log(item.questionText)
+        console.log(item.possibleAnswers)
+        console.log(item.correctAnswers)
+      })
+      console.log("-----------------")
+    }
+  }, [quizState])
 
   return (
     <View
@@ -75,6 +59,7 @@ export default function Index() {
         value={text}
         multiline={true}
         onChangeText={text => setText(text)}
+        style={styles.inputField}
       />
 
       <Button mode="contained" onPress={sendText}>
@@ -84,6 +69,18 @@ export default function Index() {
       <Text>
         {responseText || "Awaiting message..."}
       </Text>
+
+      <Dialog visible={dialogVisibility} onDismiss={() => setDialogVisibility(false)}>
+        <Dialog.Title>Alert</Dialog.Title>
+          <Dialog.Content>
+            <Text variant="bodyMedium">This is simple dialog</Text>
+          </Dialog.Content>
+          <Dialog.Actions>
+            <Link href={"/(tabs)/quiz"} onPress={() => setDialogVisibility(false)}>
+              Take your Quiz!
+            </Link>
+          </Dialog.Actions>
+      </Dialog>
     </View>
   );
 }
@@ -94,5 +91,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: 25,
     padding: 30,
+  },
+  inputField: {
+    height: 300,
   }
 })

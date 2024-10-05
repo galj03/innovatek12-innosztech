@@ -3,11 +3,10 @@ import React from "react";
 export const QuizContext = React.createContext();
 
 export const QuizProvider = (props) => {
-    const [givenAnswers, setGivenAnswers] = React.useState([]);
-    const [selectedQuestion, setSelectedQuestion] = React.useState("");
-
+    const [quizState, setQuizState] = React.useState();
+    
     return (
-        <QuizContext.Provider value={[givenAnswers, setGivenAnswers]}>
+        <QuizContext.Provider value={[quizState, setQuizState]}>
             {props.children}
         </QuizContext.Provider>
     );

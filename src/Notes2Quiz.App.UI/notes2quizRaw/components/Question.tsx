@@ -4,11 +4,11 @@ import { View, StyleSheet } from 'react-native';
 import Answer from './Answer';
 import { useContext, useEffect } from 'react';
 import React from 'react';
-import { QuizContext } from '@/hooks/QuizContext';
+import { QuestionContext } from '@/hooks/QuestionContext';
 
 
 export const QuestionComponent = (props: any) => {
-  const [givenAnswers, setGivenAnswers] = React.useContext(QuizContext);
+  const [givenAnswers, setGivenAnswers] = React.useContext(QuestionContext);
   const propQuestion: Question = props.propQuestion;
 
   return (
@@ -18,7 +18,7 @@ export const QuestionComponent = (props: any) => {
           {
             propQuestion.possibleAnswers.map((answer: string, index: number) => {
               return ( 
-                  <Answer questionNumber={props.questionNumber} correctAnswer={propQuestion.correctAnswer} key={index} answer={answer} />
+                  <Answer questionNumber={props.questionNumber} correctAnswer={propQuestion.correctAnswers[0]} key={index} answer={answer} />
                 );
               }
             )

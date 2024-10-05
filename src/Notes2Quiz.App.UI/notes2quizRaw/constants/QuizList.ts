@@ -8,19 +8,19 @@ export const quiz: Quiz = {
         questionText: "How are you?",
         questionType: QuestionTypeEnum.OneCorrectAnswerQuestion,
         possibleAnswers: ["amizing", "Not that good", "Wrong Answer", "Gercsó"],
-        correctAnswer: "amizing"
+        correctAnswers: ["amizing"]
       },
       {
         questionText: "What day it is today?",
         questionType: QuestionTypeEnum.OneCorrectAnswerQuestion,
         possibleAnswers: ["Monday", "Fryday", "Saturday", "Sunday"],
-        correctAnswer: "Saturday"
+        correctAnswers: ["Saturday"]
       },
       {
         questionText: "What is the weather like now?",
         questionType: QuestionTypeEnum.OneCorrectAnswerQuestion,
         possibleAnswers: ["Rainy", "Sunny", "Very hot", "Very big"],
-        correctAnswer: "Rainy"
+        correctAnswers: ["Rainy"]
       }
     ]
   };

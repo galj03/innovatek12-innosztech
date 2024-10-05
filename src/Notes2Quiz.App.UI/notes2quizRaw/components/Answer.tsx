@@ -1,10 +1,10 @@
 import { Card, Text, Button } from "react-native-paper";
 import { StyleSheet } from "react-native";
-import { QuizContext } from "@/hooks/QuizContext";
+import { QuestionContext } from "@/hooks/QuestionContext";
 import React, { useEffect } from "react";
 
 const Answer = (props: any) => {
-  const [givenAnswers, setGivenAnswers] = React.useContext(QuizContext);
+  const [givenAnswers, setGivenAnswers] = React.useContext(QuestionContext);
   const answer: string = props.answer;
 
   const onCardPress = () => {
