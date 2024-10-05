@@ -8,6 +8,7 @@ namespace Notes2Quiz.Web.API.Module
         public void RegisterTypes(IServiceCollection serviceCollection)
         {
             serviceCollection.AddTransient<IQuizController, QuizController>();
+            serviceCollection.AddTransient<IAuthController, AuthController>();
         }
     }
 }
