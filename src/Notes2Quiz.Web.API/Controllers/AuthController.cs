@@ -9,26 +9,28 @@ namespace Notes2Quiz.Web.API.Controllers
     public class AuthController : ControllerBase, IAuthController
     {
         #region Fields
-        private readonly IAuthService _authService;
+        private readonly IUserService _userService;
         #endregion
 
         #region ctor
-        public AuthController(IAuthService authService)
+        public AuthController(IUserService userService)
         {
-            _authService = authService ?? throw new ArgumentNullException(nameof(authService));
+            _userService = userService ?? throw new ArgumentNullException(nameof(userService));
         }
         #endregion
 
         #region Endpoints
         [HttpPost("")]
-        public IActionResult Authenticate(AuthenticateRequest model)
+        public ActionResult<string> Authenticate(AuthenticateRequest model)
         {
-            var response = _authService.Authenticate(model.Username, model.Password);
+            var response = _userService.Authenticate(model.Username, model.Password);
 
             if (response == null)
+            {
                 return BadRequest(new { message = "Username or password is incorrect" });
+            }
 
-            return Ok(response);
+            return response.Token;
         }
         #endregion
     }

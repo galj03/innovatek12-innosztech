@@ -5,6 +5,6 @@ namespace Notes2Quiz.Web.API.Controllers
 {
     public interface IAuthController
     {
-        IActionResult Authenticate(AuthenticateRequest model);
+        ActionResult<string> Authenticate(AuthenticateRequest model);
     }
 }

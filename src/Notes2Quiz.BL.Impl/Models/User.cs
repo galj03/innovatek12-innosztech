@@ -11,7 +11,7 @@ namespace Notes2Quiz.BL.Impl.Models
         #endregion
 
         #region ctor
-        public User(string username, string password, string token)
+        public User(string username, string password, string token="")
         {
             if (string.IsNullOrWhiteSpace(username))
             {
@@ -21,11 +21,6 @@ namespace Notes2Quiz.BL.Impl.Models
             if (string.IsNullOrWhiteSpace(password))
             {
                 throw new ArgumentException($"'{nameof(password)}' cannot be null or empty.", nameof(password));
-            }
-
-            if (string.IsNullOrWhiteSpace(token))
-            {
-                throw new ArgumentException($"'{nameof(token)}' cannot be null or empty.", nameof(token));
             }
 
             Username = username;

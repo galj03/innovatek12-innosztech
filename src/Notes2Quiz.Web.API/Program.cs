@@ -1,3 +1,4 @@
+using Notes2Quiz.BL.Application;
 using Notes2Quiz.BL.Impl.Module;
 using Notes2Quiz.Web.API.Module;
 
@@ -16,6 +17,8 @@ builder.Services.AddSwaggerGen();
 
     var webApiModule = new N2qWebApiModule();
     webApiModule.RegisterTypes(builder.Services);
+
+    builder.Services.Configure<IApplicationSettings>(builder.Configuration.GetSection("AppSettings"));
 }
 
 var app = builder.Build();
