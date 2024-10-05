@@ -5,8 +5,9 @@ namespace Notes2Quiz.BL.Impl.Services
 {
     internal class QuizService : IQuizService
     {
-        public string DummyMethod(string input)
+        public async Task<string> DummyMethod(string input)
         {
+            await Task.Run(() => { Thread.Sleep(5000); });
             var result = $"Hello, {input}!";
             return result;
         }

@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Notes2Quiz.BL.Models;
 using Notes2Quiz.BL.Services;
-using Notes2Quiz.Web.API.DTO;
 using System.ComponentModel.DataAnnotations;
 
 namespace Notes2Quiz.Web.API.Controllers
@@ -24,27 +23,26 @@ namespace Notes2Quiz.Web.API.Controllers
 
         #region Endpoints
         [HttpGet("dummy")]
-        public async Task<IResponse<string>> Temp([Required] string text)
+        public async Task<ActionResult<string>> Temp([Required] string text)
         {
-            var value = _quizService.DummyMethod(text);
-            var response = new JsonResponse<string>(value, new List<FeedbackMessage>(), System.Net.HttpStatusCode.OK);
-            return response;
+            var value = await _quizService.DummyMethod(text);
+            return value;
         }
 
         [HttpPost("pdf")]
-        public async Task<IResponse<IQuiz>> ParsePdf([Required] IPdf pdf)
+        public async Task<ActionResult<IQuiz>> ParsePdf([Required] IPdf pdf)
         {
             throw new NotImplementedException();
         }
 
         [HttpPost("text")]
-        public async Task<IResponse<IQuiz>> ParseText([Required] string text)
+        public async Task<ActionResult<IQuiz>> ParseText([Required] string text)
         {
             throw new NotImplementedException();
         }
 
         [HttpPost("images")]
-        public async Task<IResponse<IQuiz>> ParseImages([Required] IImageCollection images)
+        public async Task<ActionResult<IQuiz>> ParseImages([Required] IImageCollection images)
         {
             throw new NotImplementedException();
         }

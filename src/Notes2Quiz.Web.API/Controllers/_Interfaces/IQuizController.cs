@@ -1,17 +1,17 @@
-﻿using Notes2Quiz.BL.Models;
-using Notes2Quiz.Web.API.DTO;
+﻿using Microsoft.AspNetCore.Mvc;
+using Notes2Quiz.BL.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace Notes2Quiz.Web.API.Controllers
 {
     public interface IQuizController
     {
-        Task<IResponse<string>> Temp([Required] string text);
+        Task<ActionResult<string>> Temp([Required] string text);
 
-        Task<IResponse<IQuiz>> ParsePdf([Required] IPdf pdf);
+        Task<ActionResult<IQuiz>> ParsePdf([Required] IPdf pdf);
 
-        Task<IResponse<IQuiz>> ParseText([Required] string text);
+        Task<ActionResult<IQuiz>> ParseText([Required] string text);
 
-        Task<IResponse<IQuiz>> ParseImages([Required] IImageCollection images);
+        Task<ActionResult<IQuiz>> ParseImages([Required] IImageCollection images);
     }
 }

@@ -6,6 +6,6 @@ namespace Notes2Quiz.BL.Services
     {
         IQuiz GenerateQuizFromText(string input, string quizName = "");
 
-        string DummyMethod(string input);
+        Task<string> DummyMethod(string input);
     }
 }
