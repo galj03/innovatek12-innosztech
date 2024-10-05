@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Notes2Quiz.BL.Models;
 using Notes2Quiz.BL.Services;
+using Notes2Quiz.Web.API.DTO;
 using System.ComponentModel.DataAnnotations;
 
 namespace Notes2Quiz.Web.API.Controllers
@@ -23,10 +24,10 @@ namespace Notes2Quiz.Web.API.Controllers
 
         #region Endpoints
         [HttpPost("dummy")]
-        public async Task<ActionResult<TempDTO>> Temp([Required] TempDTO text)
+        public async Task<ActionResult<TextInputDTO>> Temp([Required] TextInputDTO text)
         {
             var value = await _quizService.DummyMethod(text.Text);
-            return new TempDTO(value);
+            return new TextInputDTO(value);
         }
 
         [HttpPost("pdf")]
@@ -36,9 +37,9 @@ namespace Notes2Quiz.Web.API.Controllers
         }
 
         [HttpPost("text")]
-        public async Task<ActionResult<IQuiz>> ParseText([Required] string text)
+        public async Task<ActionResult<IQuiz>> ParseText([Required] TextInputDTO text)
         {
-            var quiz = await _quizService.GenerateQuizFromText(text);
+            var quiz = await _quizService.GenerateQuizFromText(text.Text);
             return CreatedAtAction(nameof(ParseText), quiz);
         }
 
