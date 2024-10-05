@@ -6,7 +6,7 @@ namespace Notes2Quiz.Web.API.Controllers
 {
     public interface IQuizController
     {
-        Task<ActionResult<string>> Temp([Required] string text);
+        Task<ActionResult<TempDTO>> Temp([Required] TempDTO text);
 
         Task<ActionResult<IQuiz>> ParsePdf([Required] IPdf pdf);
 

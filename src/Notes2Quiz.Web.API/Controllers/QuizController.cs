@@ -22,11 +22,11 @@ namespace Notes2Quiz.Web.API.Controllers
         #endregion
 
         #region Endpoints
-        [HttpGet("dummy")]
-        public async Task<ActionResult<string>> Temp([Required] string text)
+        [HttpPost("dummy")]
+        public async Task<ActionResult<TempDTO>> Temp([Required] TempDTO text)
         {
-            var value = await _quizService.DummyMethod(text);
-            return value;
+            var value = await _quizService.DummyMethod(text.Text);
+            return new TempDTO(value);
         }
 
         [HttpPost("pdf")]
