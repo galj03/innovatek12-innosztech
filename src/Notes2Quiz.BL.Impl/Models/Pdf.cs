@@ -13,7 +13,7 @@ namespace Notes2Quiz.BL.Impl.Models
         public Pdf(string name, byte[] data)
         {
             Name = name;
-            Data = data;
+            Data = data ?? throw new ArgumentNullException(nameof(data));
         }
         #endregion
     }

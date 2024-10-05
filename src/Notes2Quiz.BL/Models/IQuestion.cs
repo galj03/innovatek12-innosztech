@@ -7,6 +7,6 @@ namespace Notes2Quiz.BL.Models
         string QuestionText { get; }
         QuestionType QuestionType { get; }
         IEnumerable<string> PossibleAnswers { get; }
-        string CorrectAnswer { get; } //TODO: consider supporting multiple correct answers for 1 question
+        IEnumerable<string> CorrectAnswers { get; }
     }
 }

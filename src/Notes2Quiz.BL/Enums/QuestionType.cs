@@ -2,7 +2,7 @@
 {
     public enum QuestionType
     {
-        OneCorrectAnswerQuestion,
-        //TODO: consider supporting multiple correct answers for 1 question
+        OneCorrectAnswer,
+        MultipleCorrectAnwsers
     }
 }

@@ -9,7 +9,7 @@ namespace Notes2Quiz.BL.Impl.Models
         public string QuestionText { get; }
         public QuestionType QuestionType { get; }
         public IEnumerable<string> PossibleAnswers { get; }
-        public string CorrectAnswer { get; }
+        public IEnumerable<string> CorrectAnswers { get; }
         #endregion
 
         #region ctor
@@ -17,22 +17,17 @@ namespace Notes2Quiz.BL.Impl.Models
             string questionText,
             QuestionType questionType,
             IEnumerable<string> possibleAnswers,
-            string correctAnswer)
+            IEnumerable<string> correctAnswers)
         {
             if (string.IsNullOrWhiteSpace(questionText))
             {
                 throw new ArgumentException($"'{nameof(questionText)}' cannot be null or whitespace.", nameof(questionText));
             }
 
-            if (string.IsNullOrWhiteSpace(correctAnswer))
-            {
-                throw new ArgumentException($"'{nameof(correctAnswer)}' cannot be null or whitespace.", nameof(correctAnswer));
-            }
-
             QuestionText = questionText;
             QuestionType = questionType;
             PossibleAnswers = possibleAnswers ?? throw new ArgumentNullException(nameof(possibleAnswers));
-            CorrectAnswer = correctAnswer;
+            CorrectAnswers = correctAnswers ?? throw new ArgumentNullException(nameof(correctAnswers));
         }
         #endregion
     }
