@@ -2,8 +2,9 @@
 
 namespace Notes2Quiz.BL.Impl.Services
 {
-    internal abstract class AByteParserService : IByteParserService //TODO: factory
+    internal abstract class AByteParserService : IByteParserService
     {
+        #region Inherited members
         public IEnumerable<string> ParseByteCollectionToStringCollection(IEnumerable<byte[]> byteCollection)
         {
             if (byteCollection is null)
@@ -22,5 +23,6 @@ namespace Notes2Quiz.BL.Impl.Services
         }
 
         public abstract string ParseBytesToString(byte[] bytes);
+        #endregion
     }
 }

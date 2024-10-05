@@ -5,6 +5,7 @@ namespace Notes2Quiz.BL.Impl.Models.Factories
 {
     internal class QuizFactory : IQuizFactory
     {
+        #region Inherited members
         public IQuiz CreateQuiz(string title, IEnumerable<IQuestion> questions)
         {
             if (string.IsNullOrWhiteSpace(title))
@@ -19,5 +20,6 @@ namespace Notes2Quiz.BL.Impl.Models.Factories
 
             return new Quiz(title, questions);
         }
+        #endregion
     }
 }
