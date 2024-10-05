@@ -77,7 +77,7 @@ export default function Index(props: any) {
           </Dialog.Content>
           <Dialog.Actions>
             <Link href={"/(tabs)/quiz"} onPress={() => setDialogVisibility(false)}>
-              Take your Quiz!
+              <Text>Take your Quiz!</Text>
             </Link>
           </Dialog.Actions>
       </Dialog>
@@ -93,6 +93,6 @@ const styles = StyleSheet.create({
     padding: 30,
   },
   inputField: {
-    height: 300,
+    maxHeight: 300,
   }
 })

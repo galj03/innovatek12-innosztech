@@ -5,10 +5,22 @@ import { DataTable, Button, Text } from "react-native-paper";
 import { Question } from "@/types/Question";
 import { QuestionProvider } from "@/hooks/QuestionContext";
 import { QuizContext } from "@/hooks/QuizContext";
+import { Link } from "expo-router";
 
 
 export default function Index() {
   const [quizState, setQuizState] = React.useContext(QuizContext);
+
+  if (quizState === undefined) {
+    return (
+      <View style={styles.container}>
+        <Link href={"/(tabs)/text"}> 
+          <Text>No quizzes loaded! Go back and load it!</Text>
+        </Link>
+      </View>
+    )
+  }
+
   const [page, setPage] = React.useState<number>(quizState.questions.length);
   const [numberOfItemsPerPageList] = React.useState([1]);
   const [itemsPerPage, onItemsPerPageChange] = React.useState(

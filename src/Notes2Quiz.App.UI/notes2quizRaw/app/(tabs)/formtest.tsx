@@ -6,12 +6,13 @@ import React from "react";
 
 
 export default function Index() {
-    const [documentState, setDocumentState] = React.useState<{name: string | undefined, size: number | undefined, uri: string | undefined, type: string}>({
+    const [documentState, setDocumentState] = React.useState<{name: string, size: number | undefined, uri: string, type: string}>({
         name: "",
-        size: -1,
+        size: 0,
         uri: "",
         type: "",
     });
+    const [fileState, setFileState] = React.useState<Blob>();
 
     const openDocumentPicker = async () => {
         const document = await DocumentPicker.getDocumentAsync({
@@ -19,18 +20,20 @@ export default function Index() {
             copyToCacheDirectory: true,
         }).then((document: DocumentPicker.DocumentPickerResult) => {
             if (!document.canceled) {
-                let name = document.assets.at(0);
-                let size = document.assets.at(0);
-                let uri = document.assets.at(0);
+                let file = document.assets.at(0)!.file;
+                let name = document.assets.at(0)!.name;
+                let size = document.assets.at(0)!.size;
+                let uri = document.assets.at(0)!.uri;
 
                 var fileToUpload = {
-                    name: name?.name,
-                    size: size?.size,
-                    uri: uri?.uri,
+                    name: name,
+                    size: size,
+                    uri: uri,
                     type: "application/pdf"
                 };
                 console.log(fileToUpload);
                 setDocumentState(fileToUpload);
+                setFileState(file);
             }
             console.log(document);
         })
@@ -39,21 +42,18 @@ export default function Index() {
     const postDocument = () => {
         const url = "http://192.168.27.14:8080/api/quiz/pdf";
         const fileUri = documentState.uri;
+        const formdata = new FormData();
+        formdata.append('document', fileState!)
         const options = {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'multipart/form-data',
             },
+            body: formdata
         };
         console.log(fileUri);
-        FileSystem.uploadAsync(url, fileUri!, options)
-        .then((response) => {
-            console.log(response);
-        })
-        .catch((error) => {
-            console.log("upload error: " + error)
-        });
+        fetch(url, options).then((response) => console.log(response)).catch((error) => console.log("pdf upload error: " + error))
     }
     
     return (
