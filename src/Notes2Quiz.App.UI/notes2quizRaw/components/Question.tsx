@@ -2,9 +2,13 @@ import { Question } from '@/types/Question';
 import { Avatar, Button, Card, DataTable, Text } from 'react-native-paper';
 import { View, StyleSheet } from 'react-native';
 import Answer from './Answer';
+import { useContext, useEffect } from 'react';
+import React from 'react';
+import { QuizContext } from '@/hooks/QuizContext';
 
 
 export const QuestionComponent = (props: any) => {
+  const [givenAnswers, setGivenAnswers] = React.useContext(QuizContext);
   const propQuestion: Question = props.propQuestion;
 
   return (
@@ -13,8 +17,8 @@ export const QuestionComponent = (props: any) => {
         <View style={styles.answerContainer}>
           {
             propQuestion.possibleAnswers.map((answer: string, index: number) => {
-                return ( 
-                  <Answer key={index} answer={answer} />
+              return ( 
+                  <Answer questionNumber={props.questionNumber} correctAnswer={propQuestion.correctAnswer} key={index} answer={answer} />
                 );
               }
             )

@@ -4,6 +4,7 @@ import { quiz } from "../../constants/QuizList";
 import React from "react";
 import { DataTable, Button, Text } from "react-native-paper";
 import { Question } from "@/types/Question";
+import { QuizProvider } from "@/hooks/QuizContext";
 
 
 export default function Index() {
@@ -26,12 +27,14 @@ export default function Index() {
   return (
     <View style={styles.container}>
       <DataTable style={styles.questionContainer}>
-        {
-          items.slice(from, to).map((question: Question, index: number) => (
+        <QuizProvider>
+          {
+            items.slice(from, to).map((question: Question, index: number) => (
 
-            <QuestionComponent key={index} propQuestion={question} />
-          ))
-        }
+              <QuestionComponent questionNumber={from} visitedQuestions={[]} key={index} propQuestion={question} />
+            ))
+          }
+        </QuizProvider>
       </DataTable>
 
       <Text>{`${from + 1} of ${items.length}`}</Text>
@@ -45,7 +48,9 @@ export default function Index() {
         style={styles.paginationButtons}
         
       />
-      <Button mode="contained" disabled={from + 1 !== quiz.questions.length}>Submit</Button>
+      <Button style={styles.submitButton} mode="contained" disabled={from + 1 !== quiz.questions.length}>
+        <Text style={styles.submitText}>Submit</Text>
+      </Button>
     </View>
   );
 
@@ -74,6 +79,9 @@ const styles = StyleSheet.create({
     flexDirection:"column"
   },
   submitButton: {
-    
+    width:200,
+  },
+  submitText: {
+    fontSize: 20,
   }
 })

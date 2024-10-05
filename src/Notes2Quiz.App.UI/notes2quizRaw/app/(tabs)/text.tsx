@@ -37,19 +37,18 @@ export default function Index() {
       ]
     };
 
-    await fetch("https://192.168.27.241:7029/api/Quiz/dummy", {
+    let bodyMessage = JSON.stringify({text:"valami"})
+
+    console.log("Fetching...");
+    await fetch("http://192.168.27.14:8080/api/quiz/dummy", {
       method: 'POST',
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({text: "valami"})
-    }).then((response) => response.json())
-    .then((json) => console.log(json))
+      body: JSON.stringify({text: text})
+    }).then(async (response) => await response.json())
+    .then((json) => setResponseText(json.text))
     .catch((error) => console.log("fetch error: " + error));
-
-    let generatedText: string | null = "";
-    console.log(fetchTestText);
 
     /*const response = await openai.chat.completions.create({
       model: 'gpt-4o-mini',
@@ -65,7 +64,6 @@ export default function Index() {
 
     //console.log("Sending text:");
     //console.log(text);
-    setResponseText(fetchTestText || "Generating text...");
   }
 
   return (
