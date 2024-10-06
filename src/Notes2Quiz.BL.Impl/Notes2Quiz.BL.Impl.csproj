@@ -20,9 +20,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Update="tessdata\.gitmodules">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
 	  <None Update="tessdata\afr.traineddata">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
@@ -483,9 +480,6 @@
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="tessdata\tel.traineddata">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="tessdata\tessconfigs\.git">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="tessdata\tessconfigs\batch">
