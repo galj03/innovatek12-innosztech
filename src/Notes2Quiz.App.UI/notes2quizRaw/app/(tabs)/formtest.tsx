@@ -4,6 +4,7 @@ import * as DocumentPicker from 'expo-document-picker';
 import * as FileSystem from 'expo-file-system';
 import FormData from 'form-data'
 import React from "react";
+import { BaseUrl, Port } from "@/constants/RequestData";
 
 
 export default function Index() {
@@ -46,7 +47,7 @@ export default function Index() {
     };
 
     const postDocument = () => {
-        const url = "http://192.168.27.14:8080/api/quiz/pdf";
+        const url = `${BaseUrl}:${Port}/api/quiz/pdf`;
         const fileUri = documentState.uri;
         const formdata = new FormData();
         //formdata.append('file', fileState!)
