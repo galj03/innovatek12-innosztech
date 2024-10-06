@@ -20,7 +20,7 @@ export default function Index() {
             copyToCacheDirectory: true,
         }).then((document: DocumentPicker.DocumentPickerResult) => {
             if (!document.canceled) {
-                let file = document.assets.at(0)!.file;
+                let file = document.assets.at(0)?.file;
                 let name = document.assets.at(0)!.name;
                 let size = document.assets.at(0)!.size;
                 let uri = document.assets.at(0)!.uri;
@@ -31,9 +31,14 @@ export default function Index() {
                     uri: uri,
                     type: "application/pdf"
                 };
-                console.log(fileToUpload);
+
+                fetch(uri).then((response) => {
+                    response.blob().then((blob) => {
+                        setFileState(blob);
+                    }).catch((error) => console.log("Blob error: " + error))
+                }).catch((error) => console.log("Fetch error: " + error))
+                console.log("file----: " + file);
                 setDocumentState(fileToUpload);
-                setFileState(file);
             }
             console.log(document);
         })

@@ -34,7 +34,6 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end"
   },
   headerText: {
-    fontSize: 40,
     textAlign: "center",
   },
   answerContainer: {

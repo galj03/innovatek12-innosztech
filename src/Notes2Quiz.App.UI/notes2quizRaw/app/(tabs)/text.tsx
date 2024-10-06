@@ -18,9 +18,8 @@ export default function Index(props: any) {
   const [quizState, setQuizState] = React.useContext(QuizContext);
 
   const sendText = async () => {
-    console.log("-----------------------")
-    text.replaceAll("/(\r\n|\n|\r)/gm", "");
-    console.log(JSON.stringify(text));
+    setQuizState(undefined);
+    text.replace("/(\r\n|\n|\r)/gm", "");
 
     console.log("Fetching...");
     await fetch("http://192.168.27.14:8080/api/quiz/text", {
@@ -31,7 +30,7 @@ export default function Index(props: any) {
       body: JSON.stringify({text: text})
     }).then((response) => response.json())
     .then((json) => {
-      setQuizState(json);
+      setQuizState({...json, evaluated: false, correctAnswersNumber: 0});
       setDialogVisibility(true);
     })
     .catch((error) => console.log("fetch error: " + error));
@@ -71,9 +70,9 @@ export default function Index(props: any) {
       </Text>
 
       <Dialog visible={dialogVisibility} onDismiss={() => setDialogVisibility(false)}>
-        <Dialog.Title>Alert</Dialog.Title>
+        <Dialog.Title>Quiz Ready!</Dialog.Title>
           <Dialog.Content>
-            <Text variant="bodyMedium">This is simple dialog</Text>
+            <Text variant="bodyMedium">Your quiz is ready to take!</Text>
           </Dialog.Content>
           <Dialog.Actions>
             <Link href={"/(tabs)/quiz"} onPress={() => setDialogVisibility(false)}>

@@ -1,7 +1,7 @@
 import { StyleSheet, View } from "react-native";
 import { QuestionComponent} from "../../components/Question";
 import React from "react";
-import { DataTable, Button, Text } from "react-native-paper";
+import { DataTable, Button, Text, Dialog } from "react-native-paper";
 import { Question } from "@/types/Question";
 import { QuestionProvider } from "@/hooks/QuestionContext";
 import { QuizContext } from "@/hooks/QuizContext";
@@ -21,6 +21,7 @@ export default function Index() {
     )
   }
 
+  const [answerEval, setAnswerEval] = React.useState(false);
   const [page, setPage] = React.useState<number>(quizState.questions.length);
   const [numberOfItemsPerPageList] = React.useState([1]);
   const [itemsPerPage, onItemsPerPageChange] = React.useState(
@@ -35,6 +36,22 @@ export default function Index() {
   React.useEffect(() => {
     setPage(0);
   }, [itemsPerPage]);
+
+  const evaluate = () => {
+    const nextQuizState = {
+      ...quizState,
+      evaluated: true,
+      correctAnswerNumber: 0
+    };
+
+    setQuizState(nextQuizState);
+    setAnswerEval(true);
+  }
+
+  const showResults = () => {
+    setPage(0);
+    setAnswerEval(false);
+  }
 
   return (
     <View style={styles.container}>
@@ -60,9 +77,20 @@ export default function Index() {
         style={styles.paginationButtons}
         
       />
-      <Button style={styles.submitButton} mode="contained" disabled={from + 1 !== quizState.questions.length}>
+      <Button onPress={evaluate} style={styles.submitButton} mode="contained" disabled={from + 1 !== quizState.questions.length || quizState.evaluated}>
         <Text style={styles.submitText}>Submit</Text>
       </Button>
+      <Dialog visible={answerEval} onDismiss={() => setAnswerEval(false)}>
+        <Dialog.Title>Evaluation Ready!</Dialog.Title>
+          <Dialog.Content>
+            <Text variant="bodyMedium">Quiz evaluated! Let's see how you did!</Text>
+          </Dialog.Content>
+          <Dialog.Actions>
+            <Button onPress={showResults}>
+              <Text>Show Answers!</Text>
+            </Button>
+          </Dialog.Actions>
+      </Dialog>
     </View>
   );
 
