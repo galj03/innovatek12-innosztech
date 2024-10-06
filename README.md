@@ -10,19 +10,31 @@ The convenience in this app is that not only can you optimize your learning via 
 
 ### Installation process
 
+0. Prerequisites:
+    - An OpenAI API key
+    - Visual Studio
+    - Visual Studio Code
+
 1. Clone the repository from the following link:
 
         https://github.com/galj03/innovatek12-innosztech.git
 
 2. Open the solution under src/ with Visual Studio. **'ASP.NET and web development'** and **'.NET desktop development'** are the two main modules that need to be installed via **Visual Studio Installer**.
 
-3. After the dependencies are loaded, run the API project on ***http***. It will start listening on port 8080, so make sure it is free, or assign it to another port in <code>Notes2Quiz.Web.API/Properties/launchSettings.json</code>.
+3. Add <code>Config/ApplicationSettings.json</code> under the *'src/Notes2Quiz.BL.Impl'* folder, with the following data:
 
-4. Install **Android Studio**, as its executable, *adb* will be required for running the UI.
+        {
+        "ApiKey": "Your OpenAI API key",
+        "Secret": "THIS IS USED TO SIGN AND VERIFY JWT TOKENS, REPLACE IT WITH YOUR OWN SECRET, IT CAN BE ANY STRING"
+        }
 
-5. Open the Notes2Quiz project in **Visual Studio Code**. Navigate the terminal to "src/Notes2Quiz.App.UI/notes2quizRaw/". Run <code>npm install</code> to build the UI dependencies. Then hit <code>npm start</code>, and you have already set everything on your machine. Time for your mobile device.
+4. After the dependencies are loaded, run the API project on ***http***. It will start listening on port 8080, so make sure it is free, or assign it to another port in <code>Notes2Quiz.Web.API/Properties/launchSettings.json</code>.
 
-6. Download the **Expo Go** app from *App Store*/*Google Play*. Enter the app, and scan the QR code which was generated after the UI project started running. And you will get redirected to the application itself.
+5. Install **Android Studio**, as its executable, *adb* will be required for running the UI. After opening Android Studio for the first time, the dependencies will be loaded, and the path <code>{your-appData-location}\AppData\Local\Android\Sdk\platform-tools</code> must be added to the *Path* environment variable.
+
+6. Open the Notes2Quiz project in **Visual Studio Code**. Navigate the terminal to "src/Notes2Quiz.App.UI/notes2quizRaw/". Run <code>npm install</code> to build the UI dependencies. Then hit <code>npm start</code>, and you have already set everything on your machine. Time for your mobile device.
+
+7. Download the **Expo Go** app from *App Store*/*Google Play*. Enter the app, and scan the QR code which was generated after the UI project started running. And you will get redirected to the application itself.
 
 ## Future development
 
