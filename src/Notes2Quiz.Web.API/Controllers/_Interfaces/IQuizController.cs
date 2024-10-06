@@ -14,6 +14,6 @@ namespace Notes2Quiz.Web.API.Controllers
 
         Task<ActionResult<IQuiz>> ParseText([Required] TextInputDTO text);
 
-        Task<ActionResult<IQuiz>> ParseImages([Required] ImageCollectionDTO images);
+        Task<ActionResult<IQuiz>> ParseImages([Required] IEnumerable<IFormFile> images);
     }
 }

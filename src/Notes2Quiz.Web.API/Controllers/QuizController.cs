@@ -63,11 +63,11 @@ namespace Notes2Quiz.Web.API.Controllers
         }
 
         [HttpPost("images")]
-        public async Task<ActionResult<IQuiz>> ParseImages([FromForm] ImageCollectionDTO images)
+        public async Task<ActionResult<IQuiz>> ParseImages([FromForm] IEnumerable<IFormFile> images)
         {
             var imageObjects = new List<Bitmap>();
 
-            foreach (var file in images.Images)
+            foreach (var file in images)
             {
                 using (var memoryStream = new MemoryStream())
                 {
