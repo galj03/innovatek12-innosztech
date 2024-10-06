@@ -2,6 +2,7 @@ import { StyleSheet, View } from "react-native";
 import { Button, Text } from "react-native-paper";
 import * as DocumentPicker from 'expo-document-picker';
 import * as FileSystem from 'expo-file-system';
+import FormData from 'form-data'
 import React from "react";
 
 
@@ -48,7 +49,12 @@ export default function Index() {
         const url = "http://192.168.27.14:8080/api/quiz/pdf";
         const fileUri = documentState.uri;
         const formdata = new FormData();
-        formdata.append('file', fileState!)
+        //formdata.append('file', fileState!)
+        formdata.append('file', {
+            uri: fileUri,
+           type: documentState.type, 
+           name: documentState.name,
+         });
         const options = {
             method: 'POST',
             headers: {
@@ -59,7 +65,21 @@ export default function Index() {
         };
         console.log(fileUri);
         console.log(formdata);
-        fetch(url, options).then((response) => console.log(response)).catch((error) => console.log("pdf upload error: " + error))
+
+        function reqListener() {
+            console.log(req.responseText);
+        }
+        function transferFailed() {
+            console.log("File upload error:", req.responseText);
+        }
+          
+          const req = new XMLHttpRequest();
+          req.addEventListener("load", reqListener);
+          req.addEventListener("error", transferFailed);
+          req.open("POST", url);
+          req.setRequestHeader("Accept", 'application/json');
+          //req.setRequestHeader("Content-Type", 'multipart/form-data');
+          req.send(formdata);
     }
     
     return (
