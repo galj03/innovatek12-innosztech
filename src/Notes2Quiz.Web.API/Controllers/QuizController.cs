@@ -29,10 +29,10 @@ namespace Notes2Quiz.Web.API.Controllers
 
         #region Endpoints
         [HttpPost("pdf")]
-        public async Task<ActionResult<IQuiz>> ParsePdf()
+        public async Task<ActionResult<IQuiz>> ParsePdf([FromForm] FileInputDTO fileInputDTO)
         {
             string text;
-            var file = Request.Form.Files.FirstOrDefault();
+            var file = fileInputDTO.File;
             {
                 using var stream = file.OpenReadStream();
                 PdfReader reader = new PdfReader(stream);
