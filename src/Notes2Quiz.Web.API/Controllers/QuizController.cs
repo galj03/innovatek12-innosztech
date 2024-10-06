@@ -5,6 +5,7 @@ using Notes2Quiz.BL.Models;
 using Notes2Quiz.BL.Services;
 using Notes2Quiz.Web.API.DTO;
 using System.ComponentModel.DataAnnotations;
+using System.Drawing;
 
 namespace Notes2Quiz.Web.API.Controllers
 {
@@ -17,19 +18,22 @@ namespace Notes2Quiz.Web.API.Controllers
     {
         #region Fields
         private readonly IQuizService _quizService;
+        private readonly IBitmapParserService _bitmapParserService;
+
         //private readonly ILogger<QuizController> _logger;
         #endregion
 
         #region ctor
-        public QuizController(IQuizService quizService)
+        public QuizController(IQuizService quizService, IBitmapParserService bitmapParserService)
         {
             _quizService = quizService ?? throw new ArgumentNullException(nameof(quizService));
+            _bitmapParserService = bitmapParserService ?? throw new ArgumentNullException(nameof(bitmapParserService));
         }
         #endregion
 
         #region Endpoints
         [HttpPost("pdf")]
-        public async Task<ActionResult<IQuiz>> ParsePdf([FromForm] FileInputDTO fileInputDTO)
+        public async Task<ActionResult<IQuiz>> ParsePdf([Required][FromForm] FileInputDTO fileInputDTO)
         {
             string text;
             var file = fileInputDTO.File;
@@ -59,9 +63,26 @@ namespace Notes2Quiz.Web.API.Controllers
         }
 
         [HttpPost("images")]
-        public async Task<ActionResult<IQuiz>> ParseImages([Required] IImageCollection images)
+        public async Task<ActionResult<IQuiz>> ParseImages([FromForm] ImageCollectionDTO images)
         {
-            throw new NotImplementedException();
+            var imageObjects = new List<Bitmap>();
+
+            foreach (var file in images.Images)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    await file.CopyToAsync(memoryStream);
+                    using (var img = Image.FromStream(memoryStream))
+                    {
+                        imageObjects.Add(img.Clone() as Bitmap);
+                    }
+                }
+            }
+
+            var text = _bitmapParserService.ParseBitmapsToString(imageObjects);
+
+            var quiz = await _quizService.GenerateQuizFromText(text);
+            return CreatedAtAction(nameof(ParseText), quiz);
         }
         #endregion
     }
