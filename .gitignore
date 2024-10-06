@@ -33,6 +33,7 @@ bld/
 [Ll]ogs/
 
 *ApplicationSettings.json
+deep-clean.bat
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
