@@ -11,6 +11,27 @@ import { Link } from "expo-router";
 export default function Index() {
   const [quizState, setQuizState] = React.useContext(QuizContext);
 
+  const [answerEval, setAnswerEval] = React.useState(false);
+  const [page, setPage] = React.useState<number>(!quizState || !quizState.questions ? 0 : quizState.questions.length);
+  const [numberOfItemsPerPageList] = React.useState([1]);
+  const [itemsPerPage, onItemsPerPageChange] = React.useState(
+    numberOfItemsPerPageList[0]
+  );
+
+  const [items, setItems] = React.useState(!quizState  ? [] : quizState.questions);
+
+  
+  const from = page * itemsPerPage;
+  const to = Math.min((page + 1) * itemsPerPage, items.length);
+  
+  React.useEffect(() => {
+    setPage(0);
+  }, [itemsPerPage]);
+
+  React.useEffect(() => {
+    setItems(quizState ? quizState.questions : []);
+  }, [quizState])
+  
   if (quizState === undefined) {
     return (
       <View style={styles.container}>
@@ -20,22 +41,6 @@ export default function Index() {
       </View>
     )
   }
-
-  const [answerEval, setAnswerEval] = React.useState(false);
-  const [page, setPage] = React.useState<number>(quizState.questions.length);
-  const [numberOfItemsPerPageList] = React.useState([1]);
-  const [itemsPerPage, onItemsPerPageChange] = React.useState(
-    numberOfItemsPerPageList[0]
-  );
-
-  const [items] = React.useState(quizState.questions);
-
-  const from = page * itemsPerPage;
-  const to = Math.min((page + 1) * itemsPerPage, items.length);
-
-  React.useEffect(() => {
-    setPage(0);
-  }, [itemsPerPage]);
 
   const evaluate = () => {
     const nextQuizState = {

@@ -41,7 +41,7 @@ const Answer = (props: any) => {
         disabled={quizState.evaluated} 
         mode={givenAnswers[props.questionNumber] !== undefined && givenAnswers[props.questionNumber].value === answer ? "contained" : "outlined"}
         onPress={onCardPress}
-        style={style}  
+        style={givenAnswers[props.questionNumber] === undefined ? styles.choosenWrongAnswer : style}  
       >
           <Text variant="bodyLarge">{ answer }</Text>
       </Button>

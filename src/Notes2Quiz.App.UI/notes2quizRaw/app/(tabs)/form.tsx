@@ -1,10 +1,10 @@
 import { StyleSheet, View } from "react-native";
-import { Button, Text } from "react-native-paper";
+import { Button, Dialog, Text } from "react-native-paper";
 import * as DocumentPicker from 'expo-document-picker';
-import * as FileSystem from 'expo-file-system';
+import { QuizContext } from "@/hooks/QuizContext";
 import FormData from 'form-data'
 import React from "react";
-import { BaseUrl, Port } from "@/constants/RequestData";
+import { Link } from "expo-router";
 
 
 export default function Index() {
@@ -15,6 +15,8 @@ export default function Index() {
         type: "",
     });
     const [fileState, setFileState] = React.useState<Blob>();
+    const [quizState, setQuizState] = React.useContext(QuizContext);
+    const [dialogVisibility, setDialogVisibility] = React.useState(false);
 
     const openDocumentPicker = async () => {
         const document = await DocumentPicker.getDocumentAsync({
@@ -47,7 +49,7 @@ export default function Index() {
     };
 
     const postDocument = () => {
-        const url = `${BaseUrl}:${Port}/api/quiz/pdf`;
+        const url = "http://192.168.36.14:8080/api/quiz/pdf";
         const fileUri = documentState.uri;
         const formdata = new FormData();
         //formdata.append('file', fileState!)
@@ -68,7 +70,9 @@ export default function Index() {
         console.log(formdata);
 
         function reqListener() {
-            console.log(req.responseText);
+            const respJson = JSON.parse(req.responseText)
+            setQuizState({...respJson, evaluated: false});
+            setDialogVisibility(true);
         }
         function transferFailed() {
             console.log("File upload error:", req.responseText);
@@ -85,9 +89,21 @@ export default function Index() {
     
     return (
         <View style={styles.container}>
-            <Text>{documentState.name}</Text>
+            <Text style={styles.headlineText} variant="headlineMedium">Generate quiz by PDF!</Text>
             <Button onPress={openDocumentPicker}>Choose Document</Button>
+            <Text style={styles.pickedText}>Selected: {documentState.name || "None"}</Text>
             <Button onPress={postDocument} mode="contained" disabled={documentState.name === ""}>Upload Document</Button>
+            <Dialog visible={dialogVisibility} onDismiss={() => setDialogVisibility(false)}>
+                <Dialog.Title>Quiz Ready!</Dialog.Title>
+                <Dialog.Content>
+                    <Text variant="bodyMedium">Your quiz is ready to take!</Text>
+                </Dialog.Content>
+                <Dialog.Actions>
+                    <Link href={"/(tabs)/quiz"} onPress={() => setDialogVisibility(false)}>
+                    <Text>Take your Quiz!</Text>
+                    </Link>
+                </Dialog.Actions>
+            </Dialog>
         </View>
     );
 }
@@ -95,6 +111,15 @@ export default function Index() {
 const styles = StyleSheet.create({
     container: {
         flex:1,
-        justifyContent: "center"
+        justifyContent: "center",
+        padding:30,
+        gap:10,
+    },
+    pickedText: {
+        textAlign: 'center',
+    },
+    headlineText: {
+        textAlign: 'center',
+        marginBottom: 20
     }
 })

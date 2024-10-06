@@ -15,21 +15,21 @@ export default function TabLayout() {
           headerShown: false,
         }}>
         <Tabs.Screen
-          name="index"
+          name="camera"
           options={{
-            title: 'Index',
+            title: 'Camera',
             tabBarIcon: ({ focused }) => (
-              <TabBarIcon name={focused ? 'home' : 'home-outline'} />
+              <TabBarIcon name={focused ? 'camera' : 'camera-outline'} />
             ),
           }}
         />
 
         <Tabs.Screen
-          name="text"
+          name="index"
           options={{
             title: 'Text',
             tabBarIcon: ({ focused }) => (
-              <TabBarIcon name={focused ? 'menu' : 'menu'} />
+              <TabBarIcon name={focused ? 'menu' : 'menu-outline'} />
             ),
           }}
         />
@@ -39,7 +39,17 @@ export default function TabLayout() {
           options={{
             title: 'Quiz',
             tabBarIcon: ({ focused }) => (
-              <TabBarIcon name={focused ? 'search' : 'search'} />
+              <TabBarIcon name={focused ? 'search' : 'search-outline'} />
+            ),
+          }}
+        />
+
+        <Tabs.Screen
+          name="form"
+          options={{
+            title: 'PDF',
+            tabBarIcon: ({ focused }) => (
+              <TabBarIcon name={focused ? 'document-text-sharp' : 'document-text-outline'} />
             ),
           }}
         />
