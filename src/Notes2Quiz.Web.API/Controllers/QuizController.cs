@@ -70,7 +70,6 @@ namespace Notes2Quiz.Web.API.Controllers
             
                 using (var memoryStream = new MemoryStream())
                 {
-                    Console.Out.WriteLineAsync("valami");
                     await images.CopyToAsync(memoryStream);
                     using (var img = Image.FromStream(memoryStream))
                     {

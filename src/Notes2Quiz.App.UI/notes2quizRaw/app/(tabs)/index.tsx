@@ -34,7 +34,7 @@ export default function Index() {
     .catch((error) => console.log("fetch error: " + error));
   }
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (quizState !== undefined && quizState.questions !== undefined) {
       console.log("-----------------")
       console.log(quizState.title)
@@ -45,7 +45,7 @@ export default function Index() {
       })
       console.log("-----------------")
     }
-  }, [quizState])
+  }, [quizState])*/
 
   return (
     <View

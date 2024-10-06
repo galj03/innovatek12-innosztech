@@ -27,7 +27,7 @@ const Answer = (props: any) => {
       nextGivenAnswers = [...nextGivenAnswers, {id: props.questionNumber, value: answer}]
     }
 
-    console.log(givenAnswers);
+    /*console.log(givenAnswers);*/
     setGivenAnswers(nextGivenAnswers);
     //console.log(props.questionNumber)
   }

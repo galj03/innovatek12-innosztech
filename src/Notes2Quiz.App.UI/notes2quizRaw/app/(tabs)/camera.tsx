@@ -51,14 +51,14 @@ export default function Index() {
           type: "image/jpeg",
         });
 
-        console.log([{
+        /*console.log([{
           name: name,
           uri: fileUri,
           type: type
-        }]);
+        }]);*/
 
         function reqListener() {
-          console.log(req.responseText);
+          /*console.log(req.responseText);*/
 
           setQuizState({...JSON.parse(req.responseText), evaluated: false, correctAnswersNumber: 0});
           setDialogVisibility(true);
@@ -76,7 +76,7 @@ export default function Index() {
         //req.setRequestHeader("Content-Type", 'multipart/form-data');
         req.send(formdata);
 
-        console.log(photo)
+        /*console.log(photo)*/
       }).catch((error: any) => {
         console.log("picture take error: " + error);
       })
@@ -95,7 +95,7 @@ export default function Index() {
     });
 
     if (!result.canceled) {
-      console.log(result);
+      /*console.log(result);*/
     } else {
       alert('You did not select any image.');
     }
@@ -115,16 +115,16 @@ export default function Index() {
       type: result.assets!.at(0)!.mimeType
     })
 
-    console.log(result.assets?.map((item) => {
+    /*console.log(result.assets?.map((item) => {
       return {
         name: item.fileName,
         uri: item.uri,
         type: item.mimeType
       }
-    }));
+    }));*/
 
     function reqListener() {
-      console.log(req.responseText);
+      /*console.log(req.responseText);*/
 
       setQuizState({...JSON.parse(req.responseText), evaluated: false, correctAnswersNumber: 0});
       setDialogVisibility(true);

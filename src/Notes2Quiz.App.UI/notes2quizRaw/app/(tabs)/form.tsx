@@ -42,10 +42,10 @@ export default function Index() {
                         setFileState(blob);
                     }).catch((error) => console.log("Blob error: " + error))
                 }).catch((error) => console.log("Fetch error: " + error))
-                console.log("file----: " + file);
+                /*console.log("file----: " + file);*/
                 setDocumentState(fileToUpload);
             }
-            console.log(document);
+            /*console.log(document);*/
         })
     };
 
@@ -67,8 +67,8 @@ export default function Index() {
             },
             body: formdata
         };
-        console.log(fileUri);
-        console.log(formdata);
+        /*console.log(fileUri);
+        console.log(formdata);*/
 
         function reqListener() {
             const respJson = JSON.parse(req.responseText)
