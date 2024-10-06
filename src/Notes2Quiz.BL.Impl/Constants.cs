@@ -11,7 +11,7 @@
         {
             public const string CHAT_CLIENT = "gpt-4o-mini";
 
-            public static readonly string ONE_CORRECT_ANSWER_QUIZ_PROMPT = "Hello. I am a pupil, and I am preparing for one of my exams. Could you help me make a quiz so that I can test my knowledge? I will give you my notes and please generate 5 questions with 4 answers each."
+            public static readonly string ONE_CORRECT_ANSWER_QUIZ_PROMPT = "Hello. I am a pupil, and I am preparing for one of my exams. Could you help me make a quiz so that I can test my knowledge? I will give you my notes and please generate 5 questions with 4 answers each. Please, generate the questions and answers on the same language on which the notes were written."
                 + Environment.NewLine + Environment.NewLine
                 + "My notes:" + Environment.NewLine + "--------" + Environment.NewLine + "{0}" + Environment.NewLine + "--------" + Environment.NewLine + Environment.NewLine
                 + "Please return the questions like this template:" + Environment.NewLine + Environment.NewLine

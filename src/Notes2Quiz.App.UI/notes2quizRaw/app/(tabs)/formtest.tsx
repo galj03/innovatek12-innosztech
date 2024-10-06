@@ -43,7 +43,7 @@ export default function Index() {
         const url = "http://192.168.27.14:8080/api/quiz/pdf";
         const fileUri = documentState.uri;
         const formdata = new FormData();
-        formdata.append('document', fileState!)
+        formdata.append('file', fileState!)
         const options = {
             method: 'POST',
             headers: {
@@ -53,6 +53,7 @@ export default function Index() {
             body: formdata
         };
         console.log(fileUri);
+        console.log(formdata);
         fetch(url, options).then((response) => console.log(response)).catch((error) => console.log("pdf upload error: " + error))
     }
     

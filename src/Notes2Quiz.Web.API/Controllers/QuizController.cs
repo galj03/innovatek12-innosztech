@@ -1,3 +1,5 @@
+using iText.Kernel.Pdf;
+using iText.Kernel.Pdf.Canvas.Parser;
 using Microsoft.AspNetCore.Mvc;
 using Notes2Quiz.BL.Models;
 using Notes2Quiz.BL.Services;
@@ -27,9 +29,26 @@ namespace Notes2Quiz.Web.API.Controllers
 
         #region Endpoints
         [HttpPost("pdf")]
-        public async Task<ActionResult<IQuiz>> ParsePdf([Required] IPdf pdf)
+        public async Task<ActionResult<IQuiz>> ParsePdf([FromForm] FileInputDTO fileInputDTO)
         {
-            throw new NotImplementedException();
+            string text;
+            var file = fileInputDTO.File;
+            {
+                using var stream = file.OpenReadStream();
+                PdfReader reader = new PdfReader(stream);
+                PdfDocument pdfDoc = new PdfDocument(reader);
+                StringWriter textString = new StringWriter();
+
+                for (int i = 1; i <= pdfDoc.GetNumberOfPages(); i++)
+                {
+                    textString.WriteLine(PdfTextExtractor.GetTextFromPage(pdfDoc.GetPage(i)));
+                }
+
+                text = textString.ToString();
+            }
+
+            var quiz = await _quizService.GenerateQuizFromText(text);
+            return CreatedAtAction(nameof(ParseText), quiz);
         }
 
         [HttpPost("text")]

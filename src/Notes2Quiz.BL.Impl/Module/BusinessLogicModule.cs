@@ -21,6 +21,7 @@ namespace Notes2Quiz.BL.Impl.Module
 
             serviceCollection.AddTransient<IQuizFactory, QuizFactory>();
             serviceCollection.AddTransient<IQuestionFactory, QuestionFactory>();
+            serviceCollection.AddTransient<IByteParserService, OcrByteParserService>();//TODO: caution, not implemented
         }
         #endregion
     }
