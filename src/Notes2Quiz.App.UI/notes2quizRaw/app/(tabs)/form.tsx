@@ -5,6 +5,7 @@ import { QuizContext } from "@/hooks/QuizContext";
 import FormData from 'form-data'
 import React from "react";
 import { Link } from "expo-router";
+import { BaseUrl, Port } from "@/constants/RequestData";
 
 
 export default function Index() {
@@ -49,7 +50,7 @@ export default function Index() {
     };
 
     const postDocument = () => {
-        const url = "http://192.168.36.14:8080/api/quiz/pdf";
+        const url = `${BaseUrl}:${Port}/api/quiz/pdf`;
         const fileUri = documentState.uri;
         const formdata = new FormData();
         //formdata.append('file', fileState!)

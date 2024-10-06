@@ -26,6 +26,6 @@ namespace Notes2Quiz.Web.API.Controllers
         /// Creates and returns a quiz from the data found on the given images.
         /// </summary>
         /// <returns>A quiz object.</returns>
-        Task<ActionResult<IQuiz>> ParseImages([Required] IEnumerable<IFormFile> images);
+        Task<ActionResult<IQuiz>> ParseImages([Required][FromForm] IFormFile images);
     }
 }

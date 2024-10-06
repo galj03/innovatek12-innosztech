@@ -8,6 +8,7 @@ import { QuestionTypeEnum } from "../../types/QuestionTypeEnum";
 import { Link } from "expo-router";
 import { QuizContext } from "@/hooks/QuizContext";
 import { Question } from "@/types/Question";
+import { BaseUrl, Port } from "@/constants/RequestData";
 
 export default function Index() {
   const [quizState, setQuizState] = React.useContext(QuizContext);
@@ -19,7 +20,7 @@ export default function Index() {
     text.replace("/(\r\n|\n|\r)/gm", "");
 
     console.log("Fetching...");
-    await fetch("http://192.168.36.14:8080/api/quiz/text", {
+    await fetch(`${BaseUrl}:${Port}/api/quiz/text`, {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
@@ -34,7 +35,7 @@ export default function Index() {
   }
 
   useEffect(() => {
-    if (quizState !== undefined) {
+    if (quizState !== undefined && quizState.questions !== undefined) {
       console.log("-----------------")
       console.log(quizState.title)
       quizState.questions.forEach((item: Question) => {

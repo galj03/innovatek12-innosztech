@@ -63,21 +63,21 @@ namespace Notes2Quiz.Web.API.Controllers
         }
 
         [HttpPost("images")]
-        public async Task<ActionResult<IQuiz>> ParseImages([FromForm] IEnumerable<IFormFile> images)
+        public async Task<ActionResult<IQuiz>> ParseImages([Required][FromForm] IFormFile images)
         {
             var imageObjects = new List<Bitmap>();
 
-            foreach (var file in images)
-            {
+            
                 using (var memoryStream = new MemoryStream())
                 {
-                    await file.CopyToAsync(memoryStream);
+                    Console.Out.WriteLineAsync("valami");
+                    await images.CopyToAsync(memoryStream);
                     using (var img = Image.FromStream(memoryStream))
                     {
                         imageObjects.Add(img.Clone() as Bitmap);
                     }
                 }
-            }
+            
 
             var text = _bitmapParserService.ParseBitmapsToString(imageObjects);
 

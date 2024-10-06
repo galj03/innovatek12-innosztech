@@ -1,14 +1,20 @@
 import { Camera, CameraCapturedPicture, CameraType, CameraView, FlashMode, useCameraPermissions } from "expo-camera";
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import {  Pressable, StyleSheet, TouchableOpacity, View } from "react-native";
-import { Button, Text} from "react-native-paper";
+import { Button, Dialog, Text} from "react-native-paper";
+import { BaseUrl, Port } from "@/constants/RequestData";
 import * as ImagePicker from 'expo-image-picker';
 import FormData from 'form-data'
+import { QuizContext } from "@/hooks/QuizContext";
+import { Link } from "expo-router";
+import { SkipEnteringContext } from "react-native-reanimated/lib/typescript/reanimated2/component/LayoutAnimationConfig";
 
 export default function Index() {
   const [facing, setFacing] = useState<CameraType>('back');
   const [permission, requestPermission] = useCameraPermissions();
-  const cameraRef = useRef();
+  const [quizState, setQuizState] = useContext(QuizContext);
+  const [dialogVisibility, setDialogVisibility] = useState(false);
+  const cameraRef = useRef<CameraView>(null);
 
   if (!permission) {
     // Camera permissions are still loading.
@@ -27,23 +33,23 @@ export default function Index() {
   }
 
   const takePicture = async () => {
+    setQuizState(undefined);
     if (cameraRef.current) {
       let photo = await cameraRef.current.takePictureAsync({
-        quality: 0.5,
-        skipProcessing: true,
-      }).then((photo: CameraCapturedPicture) => {
-        let url = "http://192.168.36.14:8080/api/quiz/images";
-        let fileUri = photo.uri;
-        let splittedUri = photo.uri.split("/");
-        let name = splittedUri[splittedUri.length - 1].split(".")[0];
-        let type = "image/" + splittedUri[splittedUri.length - 1].split(".")[1];
+        quality: 0,
+      }).then((photo: CameraCapturedPicture | undefined) => {
+        let url = `${BaseUrl}:${Port}/api/quiz/images`;
+        let fileUri = photo?.uri;
+        let splittedUri = photo?.uri.split("/");
+        let name = splittedUri![splittedUri!.length - 1].split(".")[0];
+        let type = "image/" + splittedUri![splittedUri!.length - 1].split(".")[1];
         
         const formdata = new FormData();
-        formdata.append("images", [{
+        formdata.append("images", {
           name: name,
           uri: fileUri,
-          type: "image/jpeg"
-        }]);
+          type: "image/jpeg",
+        });
 
         console.log([{
           name: name,
@@ -53,6 +59,9 @@ export default function Index() {
 
         function reqListener() {
           console.log(req.responseText);
+
+          setQuizState({...JSON.parse(req.responseText), evaluated: false, correctAnswersNumber: 0});
+          setDialogVisibility(true);
         }
 
         function transferFailed() {
@@ -64,7 +73,7 @@ export default function Index() {
         req.addEventListener("error", transferFailed);
         req.open("POST", url);
         req.setRequestHeader("Accept", 'application/json');
-        req.setRequestHeader("Content-Type", 'multipart/form-data');
+        //req.setRequestHeader("Content-Type", 'multipart/form-data');
         req.send(formdata);
 
         console.log(photo)
@@ -80,9 +89,9 @@ export default function Index() {
   }
 
   const pickImages = async () => {
+    setQuizState(undefined);
     let result = await ImagePicker.launchImageLibraryAsync({
-      allowsMultipleSelection: true,
-      quality: 0.5,
+      quality: 1,
     });
 
     if (!result.canceled) {
@@ -91,26 +100,34 @@ export default function Index() {
       alert('You did not select any image.');
     }
 
-    let url = "http://192.168.36.14:8080/api/quiz/images";
+    let url = `${BaseUrl}:${Port}/api/quiz/images`;
     const formdata = new FormData();
-    formdata.append("images", result.assets?.map((item) => {
+    /*formdata.append("images", result.assets?.map((item) => {
       return {
         name: item.fileName,
         uri: item.uri,
-        type: item.type
+        type: item.mimeType
       }
-    }));
+    }));*/
+    formdata.append("images", {
+      name: result.assets!.at(0)!.fileName,
+      uri: result.assets!.at(0)?.uri,
+      type: result.assets!.at(0)!.mimeType
+    })
 
     console.log(result.assets?.map((item) => {
       return {
         name: item.fileName,
         uri: item.uri,
-        type: item.type
+        type: item.mimeType
       }
     }));
 
     function reqListener() {
       console.log(req.responseText);
+
+      setQuizState({...JSON.parse(req.responseText), evaluated: false, correctAnswersNumber: 0});
+      setDialogVisibility(true);
     }
 
     function transferFailed() {
@@ -141,6 +158,17 @@ export default function Index() {
           </TouchableOpacity>
         </View>
       </CameraView>
+      <Dialog visible={dialogVisibility} onDismiss={() => setDialogVisibility(false)}>
+        <Dialog.Title>Quiz Ready!</Dialog.Title>
+          <Dialog.Content>
+            <Text variant="bodyMedium">Your quiz is ready to take!</Text>
+          </Dialog.Content>
+          <Dialog.Actions>
+            <Link href={"/(tabs)/quiz"} onPress={() => setDialogVisibility(false)}>
+              <Text>Take your Quiz!</Text>
+            </Link>
+          </Dialog.Actions>
+      </Dialog>
     </View>
   );
 }
