@@ -20,7 +20,7 @@
                 + "Answer2: \"answer 2\"" + Environment.NewLine
                 + "Answer3: \"answer 3\"" + Environment.NewLine
                 + "Answer4: \"answer 4\"" + Environment.NewLine
-                + "Correct answer: \"answer 1\"" + Environment.NewLine + Environment.NewLine
+                + "Correct answer: \"correct answer\"" + Environment.NewLine + Environment.NewLine
                 + "Please, choose the correct answer out of the given ones.";
         }
 
