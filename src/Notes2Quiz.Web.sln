@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34616.47
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notes2Quiz.Web.API", "Notes2Quiz.Web.API\Notes2Quiz.Web.API.csproj", "{7948387E-8586-467B-94BB-CCA74ED747E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Notes2Quiz.Web.API", "Notes2Quiz.Web.API\Notes2Quiz.Web.API.csproj", "{7948387E-8586-467B-94BB-CCA74ED747E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notes2Quiz.BL", "Notes2Quiz.BL\Notes2Quiz.BL.csproj", "{38A2A1B9-FD25-4810-855A-4BCA82E47359}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notes2Quiz.BL.Impl", "Notes2Quiz.BL.Impl\Notes2Quiz.BL.Impl.csproj", "{B11C0D09-6DDC-415D-A5BF-F5C975DD0719}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{7948387E-8586-467B-94BB-CCA74ED747E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7948387E-8586-467B-94BB-CCA74ED747E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7948387E-8586-467B-94BB-CCA74ED747E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38A2A1B9-FD25-4810-855A-4BCA82E47359}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38A2A1B9-FD25-4810-855A-4BCA82E47359}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38A2A1B9-FD25-4810-855A-4BCA82E47359}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38A2A1B9-FD25-4810-855A-4BCA82E47359}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B11C0D09-6DDC-415D-A5BF-F5C975DD0719}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B11C0D09-6DDC-415D-A5BF-F5C975DD0719}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B11C0D09-6DDC-415D-A5BF-F5C975DD0719}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B11C0D09-6DDC-415D-A5BF-F5C975DD0719}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

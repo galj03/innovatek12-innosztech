@@ -1,6 +1,6 @@
 @Notes2Quiz.Web.API_HostAddress = http://localhost:5053
 
-GET {{Notes2Quiz.Web.API_HostAddress}}/weatherforecast/
+POST {{Notes2Quiz.Web.API_HostAddress}}/quiz/pdf
 Accept: application/json
 
 ###
